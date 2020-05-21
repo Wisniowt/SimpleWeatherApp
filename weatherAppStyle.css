@@ -1,0 +1,111 @@
+body {
+    background-color: rgb(40, 40, 145);
+    padding: 50px;
+}
+
+h1 {
+    font-weight: bold;
+    color: rgb(255, 255, 255);
+    font-size: xx-large;
+    text-align: center;
+    font-family: "Franklin Gothic Medium", "Arial Narrow", Arial,
+        sans-serif;
+}
+
+th,
+td {
+    border: 2px solid black;
+    border-collapse: collapse;
+    padding: 5px;
+    text-align: left;
+}
+
+th.purple {
+    border: 2px solid black;
+    border-collapse: collapse;
+    padding: 5px;
+    text-align: left;
+    background-color: rgb(156, 156, 224);
+}
+
+td.purple {
+    border: 2px solid black;
+    border-collapse: collapse;
+    padding: 5px;
+    text-align: center;
+    background-color: rgb(156, 156, 224);
+    color: rgb(255, 255, 255);
+}
+
+input {
+
+    width: 50%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: none;
+    border-bottom: 2px solid rgb(255, 255, 255);
+    background-color: rgb(40, 40, 145);
+    font-size: large;
+    color: rgb(255, 255, 255);
+    outline: none;
+}
+
+::placeholder {
+    color: rgb(255, 255, 255);
+    opacity: 1;
+    /* Firefox */
+}
+
+div.centreEverything {
+    text-align: center;
+}
+
+.redButton {
+    font-size: 1rem;
+    font-weight: bold;
+    letter-spacing: 0.1em;
+    padding: 10px 20px;
+    margin-left: 15px;
+    border-radius: 5px;
+    background: rgb(216, 41, 41);
+    color: white;
+    outline: none;
+}
+
+div.indentedBox {
+    display: inline-block;
+    /* height: responsive; */
+    width: 15%;
+    background: #fdfdfd;
+    box-shadow: inset 0px 0px 10px 0px rgb(143, 143, 143);
+    border-bottom: 1px solid #c5c5c5;
+    border-radius: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+    margin-top: 10px;
+}
+
+div.indentedBoxTwo {
+    display: inline-block;
+    /* height: responsive; */
+    /* width: responsive; */
+    background: #fdfdfd;
+    box-shadow: inset 0px 0px 10px 0px rgb(143, 143, 143);
+    border-bottom: 1px solid #c5c5c5;
+    border-radius: 5px;
+    padding: 10px;
+    text-align: center;
+    margin-top: 10px;
+}
+
+hr {
+
+    text-align: center;
+}
+
+#myDIVLOL {
+    display: none;
+    width: 100%;
+}
