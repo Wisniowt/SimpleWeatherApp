@@ -24,6 +24,14 @@
         <div id="myDIVLOL" style="display: none;">
             <div class="centreEverything">
 
+                <div class="indentedBoxForLables">
+                    <b>Temperature:</b>
+                    <hr /><b>Pressure:</b>
+                    <hr /><b>Humidity:</b>
+                    <hr /><b>Wind:</b>
+                    <hr /><b>Overcast:</b>
+                </div>
+
                 <div class="indentedBox"><b>{{ current.today }}</b>
                     <hr />{{ current.currentTemp }} <span>&#8451;</span>
                     <hr />{{ current.pressure }}
@@ -216,7 +224,7 @@
                 this.current.humidity =
                     response.result.list[0].main.humidity + "%";
                 this.current.wind =
-                    response.result.list[0].wind.speed + " m/s";
+                    (response.result.list[0].wind.speed * 3.6).toFixed(2) + " km/h";
                 this.current.overcast =
                     response.result.list[0].weather[0].description;
 
@@ -232,9 +240,10 @@
                 this.tomorrow.humidity =
                     response.result.list[8].main.humidity + "%";
                 this.tomorrow.wind =
-                    response.result.list[8].wind.speed + " m/s";
+                    (response.result.list[8].wind.speed * 3.6).toFixed(2) + " km/h";
                 this.tomorrow.overcast =
                     response.result.list[8].weather[0].description;
+
                 this.twoDayForcast.today = dayByNameTwoDays;
                 this.twoDayForcast.currentTemp =
                     response.result.list[16].main.temp;
@@ -247,9 +256,10 @@
                 this.twoDayForcast.humidity =
                     response.result.list[16].main.humidity + "%";
                 this.twoDayForcast.wind =
-                    response.result.list[16].wind.speed + " m/s";
+                    (response.result.list[16].wind.speed * 3.6).toFixed(2) + " km/h";
                 this.twoDayForcast.overcast =
                     response.result.list[16].weather[0].description;
+
                 this.threeDayForcast.today = dayByNameThreeDays;
                 this.threeDayForcast.currentTemp =
                     response.result.list[24].main.temp;
@@ -262,7 +272,7 @@
                 this.threeDayForcast.humidity =
                     response.result.list[24].main.humidity + "%";
                 this.threeDayForcast.wind =
-                    response.result.list[24].wind.speed + " m/s";
+                    (response.result.list[24].wind.speed * 3.6).toFixed(2) + " km/h";
                 this.threeDayForcast.overcast =
                     response.result.list[24].weather[0].description;
                 this.fourDayForcast.today = dayByNameFourDays;
@@ -278,9 +288,10 @@
                 this.fourDayForcast.humidity =
                     response.result.list[32].main.humidity + "%";
                 this.fourDayForcast.wind =
-                    response.result.list[32].wind.speed + " m/s";
+                    (response.result.list[32].wind.speed * 3.6).toFixed(2) + " km/h";
                 this.fourDayForcast.overcast =
                     response.result.list[32].weather[0].description;
+
                 this.fiveDayForcast.today = dayByNameFiveDays;
                 this.fiveDayForcast.currentTemp =
                     response.result.list[39].main.temp;
@@ -293,7 +304,7 @@
                 this.fiveDayForcast.humidity =
                     response.result.list[39].main.humidity + "%";
                 this.fiveDayForcast.wind =
-                    response.result.list[39].wind.speed + "  m/s";
+                    (response.result.list[39].wind.speed * 3.6).toFixed(2) + " km/h";
                 this.fiveDayForcast.overcast =
                     response.result.list[39].weather[0].description;
 
