@@ -1,0 +1,393 @@
+<!-- development version, includes helpful console warnings -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Weather App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:extralight|Vast+Shadow" rel="stylesheet" />
+</head>
+
+<body>
+    <div id="app">
+        <h1>Welcome to my Simple Weather App</h1>
+        <!-- <p>Please enter a city and see the forcast for the next 5 days.</p> -->
+        <br />
+        <!-- <p>City:</p> -->
+        <div class="centreEverything">
+            <input v-model="city" placeholder="Search for a city" />
+            <br />
+            <button class="redButton" v-on:click="GetForecast(); ShowForecast();">See Forecast!</button>
+        </div class="centreEverything">
+        <div id="myDIVLOL" style="display: none;">
+            <div class="centreEverything">
+
+                <div class="indentedBoxForLables">
+                    <b>Temperature:</b>
+                    <hr /><b>Pressure:</b>
+                    <hr /><b>Humidity:</b>
+                    <hr /><b>Wind:</b>
+                    <hr /><b>Overcast:</b>
+                </div>
+
+                <div class="indentedBox"><b>{{ current.today }}</b>
+                    <hr />{{ current.currentTemp }} <span>&#8451;</span>
+                    <hr />{{ current.pressure }}
+                    <hr />{{ current.humidity }}
+                    <hr />{{ current.wind }}
+                    <hr />{{ current.overcast }}
+                </div>
+                <div class="indentedBox"><b>{{ tomorrow.today }}</b>
+                    <hr />{{ tomorrow.currentTemp }} <span>&#8451;</span>
+                    <hr />{{ tomorrow.pressure }}
+                    <hr />{{ tomorrow.humidity }}
+                    <hr />{{ tomorrow.wind }}
+                    <hr />{{ tomorrow.overcast }}
+                </div>
+                <div class="indentedBox"><b>{{ twoDayForcast.today }}</b>
+                    <hr />{{ twoDayForcast.currentTemp }} <span>&#8451;</span>
+                    <hr />{{ twoDayForcast.pressure }}
+                    <hr />{{ twoDayForcast.humidity }}
+                    <hr />{{ twoDayForcast.wind }}
+                    <hr />{{ twoDayForcast.overcast }}
+                </div>
+                <div class="indentedBox"><b>{{ threeDayForcast.today }}</b>
+                    <hr />{{ threeDayForcast.currentTemp }} <span>&#8451;</span>
+                    <hr />{{ threeDayForcast.pressure }}
+                    <hr />{{ threeDayForcast.humidity }}
+                    <hr />{{ threeDayForcast.wind }}
+                    <hr />{{ threeDayForcast.overcast }}
+                </div>
+                <div class="indentedBox"><b>{{ fourDayForcast.today }}</b>
+                    <hr />{{ fourDayForcast.currentTemp }} <span>&#8451;</span>
+                    <hr />{{ fourDayForcast.pressure }}
+                    <hr />{{ fourDayForcast.humidity }}
+                    <hr />{{ fourDayForcast.wind }}
+                    <hr />{{ fourDayForcast.overcast }}
+                </div>
+                <div class="indentedBox"><b>{{ fiveDayForcast.today }}</b>
+                    <hr />{{ fiveDayForcast.currentTemp }} <span>&#8451;</span>
+                    <hr />{{ fiveDayForcast.pressure }}
+                    <hr />{{ fiveDayForcast.humidity }}
+                    <hr />{{ fiveDayForcast.wind }}
+                    <hr />{{ fiveDayForcast.overcast }}
+                </div>
+            </div>
+            <div class="centreEverything">
+                <div class="indentedBoxTwo">
+                    <div>{{ bringUmbrella }}</div>
+                </div>
+            </div>
+            <div class="centreEverything">
+                <div class="indentedBoxTwo">
+                    <div>{{ youShouldPack }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.26/vue.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <script>
+    var app = new Vue({
+                el: "#app",
+                data: {
+                    city: "",
+                    forecast: "",
+                    current: {
+                        today: "",
+                        town: "",
+                        country: "",
+                        currentTemp: "",
+                        minTemp: "",
+                        maxTemp: "",
+                        pressure: "",
+                        humidity: "",
+                        wind: "",
+                        overcast: "",
+                    },
+                    tomorrow: {
+                        today: "",
+                        town: "",
+                        country: "",
+                        currentTemp: "",
+                        minTemp: "",
+                        maxTemp: "",
+                        pressure: "",
+                        humidity: "",
+                        wind: "",
+                        overcast: "",
+                    },
+                    twoDayForcast: {
+                        today: "",
+                        town: "",
+                        country: "",
+                        currentTemp: "",
+                        minTemp: "",
+                        maxTemp: "",
+                        pressure: "",
+                        humidity: "",
+                        wind: "",
+                        overcast: "",
+                    },
+                    threeDayForcast: {
+                        today: "",
+                        town: "",
+                        country: "",
+                        currentTemp: "",
+                        minTemp: "",
+                        maxTemp: "",
+                        pressure: "",
+                        humidity: "",
+                        wind: "",
+                        overcast: "",
+                    },
+
+                    fourDayForcast: {
+                        today: "",
+                        town: "",
+                        country: "",
+                        currentTemp: "",
+                        minTemp: "",
+                        maxTemp: "",
+                        pressure: "",
+                        humidity: "",
+                        wind: "",
+                        overcast: "",
+                    },
+                    fiveDayForcast: {
+                        today: "",
+                        town: "",
+                        country: "",
+                        currentTemp: "",
+                        minTemp: "",
+                        maxTemp: "",
+                        pressure: "",
+                        humidity: "",
+                        wind: "",
+                        overcast: "",
+                    },
+                    bringUmbrella: "",
+                    youShouldPack: "",
+                },
+                methods: {
+                    GetForecast: getForcast,
+                    ShowForecast: showForecast,
+
+                },
+            });
+
+    function getForcast() {
+                console.log("getForcast called");
+                let prom = fetch("http://localhost:3000/" + this.city, {
+                    mode: "cors",
+                });
+                prom.then((response) => response.json()).then((response) => {
+                    this.forecast = response.result;
+                    var currentDate = new Date();
+                    var todaysData = new Date();
+                    var tomorrowsData = new Date();
+                    var twoDaysData = new Date();
+                    var ThreeDaysData = new Date();
+                    var FourDaysData = new Date();
+                    var FiveDaysData = new Date();
+
+                    todaysData.setDate(currentDate.getDate());
+                    tomorrowsData.setDate(currentDate.getDate() + 1);
+                    twoDaysData.setDate(currentDate.getDate() + 2);
+                    ThreeDaysData.setDate(currentDate.getDate() + 3);
+                    FourDaysData.setDate(currentDate.getDate() + 4);
+                    FiveDaysData.setDate(currentDate.getDate() + 5);
+
+
+                    var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+                    var dayByNameToday = days[todaysData.getDay()];
+                    var dayByNameTomorrow = days[tomorrowsData.getDay()];
+                    var dayByNameTwoDays = days[twoDaysData.getDay()];
+                    var dayByNameThreeDays = days[ThreeDaysData.getDay()];
+                    var dayByNameFourDays = days[FourDaysData.getDay()];
+                    var dayByNameFiveDays = days[FiveDaysData.getDay()];
+
+
+                    this.current.today = dayByNameToday;
+                    this.current.currentTemp =
+                        response.result.list[0].main.temp;
+                    this.current.minTemp =
+                        response.result.list[0].main.temp_min;
+                    this.current.maxTemp =
+                        response.result.list[0].main.temp_max;
+                    this.current.pressure =
+                        response.result.list[0].main.pressure + " hpa";
+                    this.current.humidity =
+                        response.result.list[0].main.humidity + "%";
+                    this.current.wind =
+                        (response.result.list[0].wind.speed * 3.6).toFixed(2) + " km/h";
+                    this.current.overcast =
+                        response.result.list[0].weather[0].description;
+
+                    this.tomorrow.today = dayByNameTomorrow;
+                    this.tomorrow.currentTemp =
+                        response.result.list[8].main.temp;
+                    this.tomorrow.minTemp =
+                        response.result.list[8].main.temp_min;
+                    this.tomorrow.maxTemp =
+                        response.result.list[8].main.temp_max;
+                    this.tomorrow.pressure =
+                        response.result.list[8].main.pressure + " hpa";
+                    this.tomorrow.humidity =
+                        response.result.list[8].main.humidity + "%";
+                    this.tomorrow.wind =
+                        (response.result.list[8].wind.speed * 3.6).toFixed(2) + " km/h";
+                    this.tomorrow.overcast =
+                        response.result.list[8].weather[0].description;
+
+                    this.twoDayForcast.today = dayByNameTwoDays;
+                    this.twoDayForcast.currentTemp =
+                        response.result.list[16].main.temp;
+                    this.twoDayForcast.minTemp =
+                        response.result.list[16].main.temp_min;
+                    this.twoDayForcast.maxTemp =
+                        response.result.list[16].main.temp_max;
+                    this.twoDayForcast.pressure =
+                        response.result.list[16].main.pressure + " hpa";
+                    this.twoDayForcast.humidity =
+                        response.result.list[16].main.humidity + "%";
+                    this.twoDayForcast.wind =
+                        (response.result.list[16].wind.speed * 3.6).toFixed(2) + " km/h";
+                    this.twoDayForcast.overcast =
+                        response.result.list[16].weather[0].description;
+
+                    this.threeDayForcast.today = dayByNameThreeDays;
+                    this.threeDayForcast.currentTemp =
+                        response.result.list[24].main.temp;
+                    this.threeDayForcast.minTemp =
+                        response.result.list[24].main.temp_min;
+                    this.threeDayForcast.maxTemp =
+                        response.result.list[24].main.temp_max;
+                    this.threeDayForcast.pressure =
+                        response.result.list[24].main.pressure + " hpa";
+                    this.threeDayForcast.humidity =
+                        response.result.list[24].main.humidity + "%";
+                    this.threeDayForcast.wind =
+                        (response.result.list[24].wind.speed * 3.6).toFixed(2) + " km/h";
+                    this.threeDayForcast.overcast =
+                        response.result.list[24].weather[0].description;
+                    this.fourDayForcast.today = dayByNameFourDays;
+
+                    this.fourDayForcast.currentTemp =
+                        response.result.list[32].main.temp;
+                    this.fourDayForcast.minTemp =
+                        response.result.list[32].main.temp_min;
+                    this.fourDayForcast.maxTemp =
+                        response.result.list[32].main.temp_max;
+                    this.fourDayForcast.pressure =
+                        response.result.list[32].main.pressure + " hpa";
+                    this.fourDayForcast.humidity =
+                        response.result.list[32].main.humidity + "%";
+                    this.fourDayForcast.wind =
+                        (response.result.list[32].wind.speed * 3.6).toFixed(2) + " km/h";
+                    this.fourDayForcast.overcast =
+                        response.result.list[32].weather[0].description;
+
+                    this.fiveDayForcast.today = dayByNameFiveDays;
+                    this.fiveDayForcast.currentTemp =
+                        response.result.list[39].main.temp;
+                    this.fiveDayForcast.minTemp =
+                        response.result.list[39].main.temp_min;
+                    this.fiveDayForcast.maxTemp =
+                        response.result.list[39].main.temp_max;
+                    this.fiveDayForcast.pressure =
+                        response.result.list[39].main.pressure + " hpa";
+                    this.fiveDayForcast.humidity =
+                        response.result.list[39].main.humidity + "%";
+                    this.fiveDayForcast.wind =
+                        (response.result.list[39].wind.speed * 3.6).toFixed(2) + " km/h";
+                    this.fiveDayForcast.overcast =
+                        response.result.list[39].weather[0].description;
+
+                    function myFunction() {
+                        var x = document.getElementById("myDIV");
+                        if (x.style.display === "none") {
+                            x.style.display = "block";
+                        } else {
+                            x.style.display = "none";
+                        }
+                    }
+
+                    function bringAnUmbrella() {
+                        var containsRain = ""
+                        for (i = 0; i < arguments.length; i++) {
+                            containsRain = containsRain + arguments[i] + "";
+                        }
+
+                        var overcastContainRain = containsRain.includes("rain");
+
+                        if (overcastContainRain == false) {
+
+                            return "You probably don't need an umbrella.";
+                        } else if (overcastContainRain == true) {
+
+                            return "Bring an umbrella with you if you're going away!";
+                        }
+                    }
+
+                    function whatToPack() {
+                        var i;
+                        var whatToPack = 0;
+                        var forcastTotalTemp = 0;
+                        var forcastMeanTemp = 0;
+                        for (i = 0; i < arguments.length; i++) {
+                            forcastTotalTemp = forcastTotalTemp + arguments[i];
+                        }
+                        forcastMeanTemp = forcastTotalTemp / 6;
+                        if (forcastMeanTemp >= -40 && forcastMeanTemp <= 10) {
+                            return "You should pack clothes for a cold weather!";
+                        }
+                        if (forcastMeanTemp >= 10 && forcastMeanTemp <= 20) {
+                            return "You should pack clothes for a warm weather!";
+                        }
+                        if (forcastMeanTemp >= 20 && forcastMeanTemp <= 40) {
+                            return "You should pack clothes for a hot weather!";
+                        }
+                    }
+
+
+                    this.bringUmbrella = bringAnUmbrella(this.current.overcast, this.tomorrow.overcast, this
+                        .twoDayForcast.overcast, this.threeDayForcast.overcast, this.fourDayForcast.overcast,
+                        this.fiveDayForcast.overcast);
+
+
+                    this.youShouldPack = whatToPack(
+                        this.current.currentTemp,
+                        this.tomorrow.currentTemp,
+                        this.twoDayForcast.currentTemp,
+                        this.threeDayForcast.currentTemp,
+                        this.fourDayForcast.currentTemp,
+                        this.fiveDayForcast.currentTemp
+
+
+                    );
+                });
+            }
+
+            var functionExecuted = false;
+
+            function showForecast() {
+                if (functionExecuted == false && (this.city != "")) {
+                    var x = document.getElementById("myDIVLOL");
+                    if (x.style.display === "none") {
+                        x.style.display = "block";
+                    } else {
+                        x.style.display = "none";
+                    }
+                    functionExecuted = true
+                }
+            }
+    </script>
+</body>
+<style>
+    @import './weatherAppStyle.css';
+</style>
+</html>
